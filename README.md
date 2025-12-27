@@ -824,6 +824,6 @@ This project is released for educational purposes only. Use at your own risk.
 
 **⭐ If you found this helpful, please star the repository! ⭐**
 
-Made with ❤️ for the cybersecurity community
+
 
 </div>
