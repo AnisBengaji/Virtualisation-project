@@ -1,98 +1,205 @@
-# Virtual Infrastructure Deployment and Security Project
+🛡️ Virtual Infrastructure Deployment and Security Project
+⚠️ Disclaimer
 
-## Disclaimer
-This project is intended for educational and lab purposes only.  
-All testing was conducted in an isolated virtual environment.  
+This project is intended strictly for educational and lab purposes.
+All testing was conducted in an isolated virtual environment.
 No real-world systems were targeted or harmed.
 
-This project demonstrates the deployment and securing of a virtual infrastructure using virtualization tools. It covers:
+📌 Project Overview
 
-- Deployment and configuration of **pfSense** as a firewall with WAN, LAN, and DMZ interfaces.
-- Setup of **OpenVPN** for secure remote access.
-- Configuration of **Suricata** as an IDS/IPS.
-- Deployment of a hardened **Ubuntu Server 22.04 LTS** VM with SSH key authentication, iptables firewall, and rsyslog.
-- Containerized deployment of a **Flask web application** using Docker and Docker Compose.
-- Real-time application monitoring with **Prometheus** and **Grafana**.
-- Centralized security monitoring with **Wazuh** across endpoints (Ubuntu, Kali, Windows 10) and integration with Suricata alerts.
+This project demonstrates the deployment and securing of a virtualized infrastructure using industry-standard security tools and best practices.
 
-The entire setup is designed to run in a virtual environment (e.g., VirtualBox or VMware) for educational and testing purposes.
+It includes:
 
-## Architecture Overview
+Deployment and configuration of pfSense as a firewall with WAN, LAN, and DMZ interfaces
 
-- **pfSense VM**: Firewall/router with WAN (NAT), LAN (host-only), and optional DMZ (host-only).
-- **Ubuntu Server VM**: Hardened server hosting the Wazuh manager.
-- **Kali Linux VM**: Testing/attacker machine with Wazuh agent.
-- **Windows 10 VM**: Endpoint with Wazuh agent.
-- **Docker Containers** (on host or separate VM): Flask app, Prometheus, Grafana.
-- **Wazuh**: Centralized manager on Ubuntu Server; agents on all VMs including pfSense to forward Suricata logs.
+Setup of OpenVPN for secure remote access
 
-Traffic is controlled via pfSense rules, with Suricata monitoring for intrusions. Wazuh collects and analyzes logs from all endpoints, including Suricata's network IDS data.
+Configuration of Suricata as an IDS/IPS
 
-## Prerequisites
+Deployment of a hardened Ubuntu Server 22.04 LTS with:
 
-- Virtualization platform (VirtualBox or VMware).
-- ISO images:
-  - pfSense (latest)
-  - Ubuntu Server 22.04 LTS
-  - Kali Linux
-  - Windows 10
-- Host machine with sufficient resources (≥ 16 GB RAM recommended).
-- Basic networking and Linux knowledge.
+SSH key-based authentication
 
-## Setup Instructions
+iptables firewall
 
-### 1. Deploy pfSense Firewall
+rsyslog logging
 
-![pfSense Dashboard](https://sanuja.com/blog/wp-content/uploads/2020/12/pfSense_web_interface_advanced_dashboard.jpg)
+Containerized deployment of a Flask web application using Docker & Docker Compose
 
-1. Create VM:
-   - OS: FreeBSD (64-bit)
-   - RAM: ≥ 2 GB
-   - Disk: ≥ 10 GB
+Real-time monitoring using Prometheus and Grafana
 
-2. Network adapters:
-   - Adapter 1 → NAT (WAN)
-   - Adapter 2 → Host-only (LAN)
-   - Adapter 3 → Host-only (DMZ, optional)
+Centralized endpoint and security monitoring using Wazuh, integrated with Suricata alerts
 
-3. Install pfSense from ISO, assign interfaces, set admin password.
+The entire setup runs in a virtual lab environment (VirtualBox or VMware) for learning, testing, and security experimentation.
 
-4. Access web GUI: `https://<LAN_IP>` (default often 192.168.1.1).
+ Architecture Overview
 
-5. Configure firewall rules:
-   - Block vulnerable protocols on LAN.
-   - Block all traffic from DMZ to LAN.
+pfSense VM
 
-#### OpenVPN Setup
+Acts as the main firewall/router
 
-![OpenVPN Wizard in pfSense](https://www.wundertech.net/wp-content/uploads/2022/01/OpenVPN_pfSense4.jpg)
+Interfaces:
 
-6. Set up OpenVPN (VPN → OpenVPN → Wizards):
-   - Create CA and server certificate.
-   - Configure users and export client configs.
-   - Allow UDP 1194 on WAN.
+WAN (NAT)
 
-#### Suricata IDS/IPS
+LAN (Host-Only)
 
-![Suricata Configuration in pfSense](https://forum.netgate.com/assets/uploads/files/1566312969110-suricataalerts.png)
+DMZ (Host-Only, optional)
 
-7. Install & configure Suricata:
-   - System → Package Manager → Install Suricata.
-   - Enable on WAN/LAN in IPS mode.
-   - Enable EVE JSON logging.
+Ubuntu Server VM
 
-### 2. Deploy Hardened Ubuntu Server (Wazuh Manager Host)
+Hardened Linux server
 
-![Ubuntu Terminal with Firewall Rules](https://www.cyberciti.biz/media/new/faq/2016/01/How-to-list-all-iptables-rules-in-Linux.jpg)
+Hosts the Wazuh Manager
 
-1. Install Ubuntu Server 22.04 LTS with OpenSSH enabled.
+Kali Linux VM
 
-2. Update system:
-   ```bash
-   sudo apt update && sudo apt upgrade -y
+Used for security testing (e.g., Nmap scans)
 
-Configure SSH key authentication.
-Set up iptables firewall:Bashsudo iptables -P INPUT DROP
+Runs a Wazuh agent
+
+Windows 10 VM
+
+Endpoint system
+
+Runs a Wazuh agent
+
+Docker Containers (host or separate VM)
+
+Flask web application
+
+Prometheus
+
+Grafana
+
+Wazuh
+
+Centralized security manager on Ubuntu Server
+
+Agents on all VMs, including pfSense
+
+Collects endpoint logs and Suricata IDS alerts
+
+Traffic is controlled using pfSense firewall rules, while Suricata inspects network traffic.
+Wazuh aggregates and analyzes logs from all endpoints for threat detection.
+
+ Prerequisites
+
+Virtualization software:
+
+VirtualBox or VMware
+
+ISO Images:
+
+pfSense (latest)
+
+Ubuntu Server 22.04 LTS
+
+Kali Linux
+
+Windows 10
+
+Host system with sufficient resources:
+
+≥ 16 GB RAM recommended
+
+Basic knowledge of:
+
+Networking
+
+Linux
+
+Virtualization concepts
+
+⚙️ Setup Instructions
+🔥 1. Deploy pfSense Firewall
+
+VM Configuration
+
+OS: FreeBSD (64-bit)
+
+RAM: ≥ 2 GB
+
+Disk: ≥ 10 GB
+
+Network Adapters
+
+Adapter 1 → NAT (WAN)
+
+Adapter 2 → Host-only (LAN)
+
+Adapter 3 → Host-only (DMZ – optional)
+
+Installation Steps
+
+Install pfSense from ISO
+
+Assign WAN, LAN, and DMZ interfaces
+
+Set a strong admin password
+
+Access the web interface:
+
+https://<LAN_IP>
+
+
+(Default often 192.168.1.1)
+
+Firewall Rules
+
+Block vulnerable protocols on LAN
+
+Block DMZ → LAN traffic entirely
+
+🔐 OpenVPN Configuration
+
+Use VPN → OpenVPN → Wizards
+
+Create:
+
+Certificate Authority
+
+Server certificate
+
+User credentials
+
+Export client configurations
+
+Allow UDP 1194 on WAN
+
+🚨 Suricata IDS/IPS
+
+Install via System → Package Manager
+
+Enable on:
+
+WAN
+
+LAN
+
+Enable IPS mode
+
+Enable EVE JSON logging
+
+🖥️ 2. Deploy Hardened Ubuntu Server (Wazuh Manager)
+
+Installation
+
+Ubuntu Server 22.04 LTS
+
+Enable OpenSSH
+
+System Update
+sudo apt update && sudo apt upgrade -y
+
+SSH & Firewall Hardening
+
+SSH key-based authentication
+
+iptables firewall:
+
+sudo iptables -P INPUT DROP
 sudo iptables -P FORWARD DROP
 sudo iptables -P OUTPUT ACCEPT
 sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -101,42 +208,107 @@ sudo iptables -A INPUT -i lo -j ACCEPT
 sudo apt install iptables-persistent -y
 sudo netfilter-persistent save
 
-3. Deploy Wazuh for Endpoint Monitoring & Suricata Integration
-Wazuh Main Dashboard
-Wazuh Agents Management
-3.1 Install Wazuh Manager on Ubuntu Server
-Use the assisted installer for the full stack:
-Bashcurl -sO https://packages.wazuh.com/4.x/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
-Access dashboard at https://<UBUNTU_IP> (change default credentials immediately).
-3.2 Install Wazuh Agents & Suricata Integration
+🛡️ 3. Wazuh Deployment & Suricata Integration
+Wazuh Manager Installation
 
-Install agents on Ubuntu/Kali, Windows 10, and pfSense as detailed previously.
-Add Suricata eve.json monitoring to pfSense agent config for integration.
+Use the assisted installer:
 
-Suricata alerts will appear in the Wazuh dashboard.
-4. Deploy Containerized Web App with Monitoring
-Docker Compose Running Containers
-Project Structure & Key Files
-(As in previous versions: app.py, requirements.txt, Dockerfile, prometheus.yml, docker-compose.yml)
-Run:
-Bashdocker compose up -d
-Prometheus Targets Interface
+curl -sO https://packages.wazuh.com/4.x/wazuh-install.sh
+sudo bash ./wazuh-install.sh -a
+
+
+Access dashboard:
+
+https://<UBUNTU_IP>
+
+
+Change default credentials immediately
+
+Wazuh Agents
+
+Installed on:
+
+Ubuntu
+
+Kali Linux
+
+Windows 10
+
+pfSense
+
+Suricata Integration
+
+Configure pfSense Wazuh agent to monitor:
+
+/var/log/suricata/eve.json
+
+
+Suricata alerts appear in the Wazuh Dashboard
+
+🐳 4. Containerized Web App & Monitoring
+Stack
+
+Flask application
+
+Prometheus
+
+Grafana
+
+Run Containers
+docker compose up -d
+
+Access Services
+
+Flask App: http://localhost:5000
 
 Prometheus: http://localhost:9090
 
-Grafana Dashboard with Metrics
+Grafana: http://localhost:3000
 
-Grafana: http://localhost:3000 (admin/admin – change password!)
-Add Prometheus data source and create dashboard for flask_app_requests_total.
+Default: admin / admin (change password)
 
-Optional: Temporary Public Exposure with Ngrok
-Ngrok Tunnel Terminal
-Bashngrok http 5000  # or 3000/9090 as needed
-Verification
+Grafana Setup
 
-Test firewall rules and Suricata (run nmap scans from Kali → check alerts in Wazuh/Suricata).
-Confirm SSH key-only access.
-View real-time metrics in Grafana.
-Check Wazuh dashboard for agent connectivity and Suricata alerts.
+Add Prometheus data source
 
-This project implements security best practices across networking, server hardening, containerization, application monitoring, and centralized endpoint/security event management.
+Create dashboard for:
+
+flask_app_requests_total
+
+🌐 Optional: Temporary Public Exposure (Ngrok)
+ngrok http 5000
+
+
+(Can also expose 3000 or 9090)
+
+✅ Verification Checklist
+
+Run Nmap scans from Kali
+
+Verify Suricata & Wazuh alerts
+
+Confirm SSH key-only access
+
+Validate firewall segmentation
+
+Monitor metrics in Grafana
+
+Ensure all Wazuh agents are connected
+
+ Conclusion
+
+This project implements security best practices across:
+
+Network segmentation & firewalling
+
+IDS/IPS monitoring
+
+Endpoint detection & response
+
+Server hardening
+
+Containerized applications
+
+Centralized logging and monitoring
+
+It serves as a complete cybersecurity lab for learning defensive security, SOC workflows, and infrastructure hardening.
